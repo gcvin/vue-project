@@ -3,11 +3,18 @@ import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 import { useDark, useToggle } from '@vueuse/core'
 import { ElSwitch, ElButton } from 'element-plus'
-import { MyInput } from './packages'
-import hashiqi from '@/packages/assets/svgs/hashiqi.svg?component'
+import { MyInput } from 'my-component'
+import baimao from '@/assets/svgs/baimao.svg?component'
+import { onMounted, ref } from 'vue'
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
+const name = ref('')
+const inputRef = ref<InstanceType<typeof MyInput> | null>(null)
+
+onMounted(() => {
+  inputRef.value?.focus()
+})
 </script>
 
 <template>
@@ -23,8 +30,20 @@ const toggleDark = useToggle(isDark)
         <RouterLink to="/about">About</RouterLink>
       </nav>
 
-      <ElButton type="primary" :icon="hashiqi" size="large">Get Started</ElButton>
-      <MyInput />
+      <ElButton type="primary" :icon="baimao" size="large">Get Started</ElButton>
+      <MyInput
+        ref="inputRef"
+        v-model="name"
+        placeholder="Enter your name"
+        @change="(val: string) => console.log(val)"
+      >
+        <template #prepend>
+          <span>Prefix</span>
+        </template>
+        <template #append>
+          <span>Suffix</span>
+        </template>
+      </MyInput>
     </div>
   </header>
 

@@ -1,6 +1,10 @@
-import { Plugin } from 'vite'
+import type { Plugin } from 'vite'
 
-export default ({ pkgName }): Plugin => {
+interface ImportStylePluginOptions {
+  pkgName: string
+}
+
+export default ({ pkgName }: ImportStylePluginOptions): Plugin => {
   const regStr = `(?<!\\/\\/.*|\\/\\*[\s\S]*?\\*\\/\\s*)import\\s*{\\s*([^{}]+)\\s*}\\s*from\\s*['"]${pkgName}['"]`
   return {
     name: 'vite-plugin-import-style',
@@ -13,7 +17,7 @@ export default ({ pkgName }): Plugin => {
             .map((item: string) => {
               item = item.trim()
               const name = item.slice(2).charAt(0).toLowerCase() + item.slice(3)
-              return `import ${item} from '${pkgName}/es/components/${name.trim()}';
+              return `import ${item} from '${pkgName}/es/components/${name.trim()}/index';
                       import '${pkgName}/es/components/${name.trim()}/${item.slice(2)}.css'`
             })
             .join(';')

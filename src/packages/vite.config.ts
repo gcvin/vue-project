@@ -11,7 +11,7 @@ export default defineConfig(() => {
     publicDir: false,
     resolve: {
       alias: {
-        '@': resolve(__dirname, './'),
+        '@': fileURLToPath(new URL('../', import.meta.url)),
       },
     },
     build: {
@@ -29,7 +29,7 @@ export default defineConfig(() => {
           },
           {
             format: 'es',
-            entryFileNames: '[name].js',
+            entryFileNames: '[name].mjs',
             exports: 'named',
             preserveModules: true,
             preserveModulesRoot: 'packages',
@@ -57,11 +57,11 @@ export default defineConfig(() => {
         defaultImport: 'url',
       }),
       dts({
-        tsconfigPath: resolve(__dirname, './tsconfig.json'),
+        tsconfigPath: resolve(__dirname, './tsconfig.declaration.json'),
         outDir: resolve(__dirname, './lib'),
       }),
       dts({
-        tsconfigPath: resolve(__dirname, './tsconfig.json'),
+        tsconfigPath: resolve(__dirname, './tsconfig.declaration.json'),
         outDir: resolve(__dirname, './es'),
       }),
     ],

@@ -1,10 +1,10 @@
 import type { App, Component, Plugin } from 'vue'
 
-export const withInstall = (component: Component): Component & Plugin => {
+export const withInstall = <T extends Component>(component: T): T & Plugin => {
   ;(component as Plugin).install = (app: App) => {
     if (component.name) {
       app.component(component.name, component)
     }
   }
-  return component as Component & Plugin
+  return component as T & Plugin
 }

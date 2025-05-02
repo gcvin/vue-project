@@ -14,6 +14,9 @@ importers:
       element-plus:
         specifier: ^2.9.8
         version: 2.9.8(vue@3.5.13(typescript@5.8.3))
+      my-component:
+        specifier: workspace:*
+        version: link:src/packages
       pinia:
         specifier: ^3.0.1
         version: 3.0.2(typescript@5.8.3)(vue@3.5.13(typescript@5.8.3))
@@ -90,6 +93,8 @@ importers:
       vue-tsc:
         specifier: ^2.2.8
         version: 2.2.10(typescript@5.8.3)
+
+  src/packages: {}
 
 packages:
 
