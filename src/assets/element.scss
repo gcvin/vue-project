@@ -1,0 +1,18 @@
+/* just override what you need */
+@forward 'element-plus/theme-chalk/src/common/var.scss' with (
+  $colors: (
+    'primary': (
+      'base': green,
+    ),
+  ),
+  $border-radius: (
+    'base': 2px,
+    'small': 1px,
+  )
+);
+
+// If you just import on demand, you can ignore the following content.
+@use 'element-plus/theme-chalk/src/index.scss' as *;
+
+// custom dark variables
+@use './element-dark.scss';
