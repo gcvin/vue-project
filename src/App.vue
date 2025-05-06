@@ -2,9 +2,10 @@
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 import { useDark, useToggle } from '@vueuse/core'
-import { ElSwitch, ElButton } from 'element-plus'
+import { ElSwitch, ElButton, ElTabs, ElTabPane } from 'element-plus'
 import { MyInput } from 'my-component'
 import baimao from '@/assets/svgs/baimao.svg?component'
+import heimao from '@/assets/svgs/heimao.svg?component'
 import { onMounted, ref } from 'vue'
 
 const isDark = useDark()
@@ -44,6 +45,16 @@ onMounted(() => {
           <span>Suffix</span>
         </template>
       </MyInput>
+
+      <div class="tabs-wrapper">
+        <baimao />
+        <heimao />
+        <ElTabs>
+          <ElTabPane v-for="n in 12" :key="n" :label="`Tab ${n}`" :name="`tab${n}`">
+            <div>Content of Tab {{ n }}</div>
+          </ElTabPane>
+        </ElTabs>
+      </div>
     </div>
   </header>
 
@@ -84,6 +95,43 @@ nav a {
 
 nav a:first-of-type {
   border: 0;
+}
+
+:deep(.el-tabs__nav-next),
+:deep(.el-tabs__nav-prev) {
+  opacity: 0;
+}
+
+.tabs-wrapper {
+  width: 400px;
+  position: relative;
+
+  svg {
+    width: 20px;
+    height: 40px;
+    position: absolute;
+    top: 0;
+    display: none;
+  }
+
+  svg:nth-of-type(1):has(~ .el-tabs .el-tabs__nav-prev),
+  svg:nth-of-type(2):has(~ .el-tabs .el-tabs__nav-next) {
+    display: block;
+  }
+
+  svg:nth-of-type(1):has(~ .el-tabs .el-tabs__nav-prev.is-disabled),
+  svg:nth-of-type(2):has(~ .el-tabs .el-tabs__nav-next.is-disabled) {
+    cursor: not-allowed;
+    z-index: 1;
+  }
+
+  svg:nth-of-type(1) {
+    left: 0;
+  }
+
+  svg:nth-of-type(2) {
+    right: 0;
+  }
 }
 
 @media (min-width: 1024px) {
