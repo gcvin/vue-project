@@ -36,7 +36,7 @@ onMounted(() => {
         ref="inputRef"
         v-model="name"
         placeholder="Enter your name"
-        @change="(val: string) => console.log(val)"
+        @input="(val: string) => console.log(val)"
       >
         <template #prepend>
           <span>Prefix</span>

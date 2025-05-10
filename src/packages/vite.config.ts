@@ -18,7 +18,7 @@ export default defineConfig(() => {
       outDir: resolve(__dirname, './'),
       cssCodeSplit: true,
       rollupOptions: {
-        external: ['@element-plus/icons-vue', 'element-plus', 'vue'],
+        external: ['element-plus', 'vue', 'lodash-es'],
         output: [
           {
             format: 'es',

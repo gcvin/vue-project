@@ -1,5 +1,5 @@
 {
-  "name": "my-component",
+  "name": "@gcvin/my-component",
   "version": "1.0.0",
   "description": "A Vue 3 component library",
   "main": "lib/index.js",
@@ -46,5 +46,19 @@
   },
   "unpkg": "dist/index.js",
   "jsdelivr": "dist/index.js",
-  "style": "dist/index.css"
+  "style": "dist/index.css",
+  "files": [
+    "dist",
+    "es",
+    "lib"
+  ],
+  "peerDependencies": {
+    "element-plus": "^2.9.8",
+    "vue": "^3.5.13"
+  },
+  "dependencies": {
+    "@types/lodash-es": "^4.17.12",
+    "lodash-es": "^4.17.21"
+  },
+  "repository": "https://github.com/gcvin/vue-project"
 }
