@@ -1,5 +1,12 @@
 <template>
-  <el-input ref="inputRef" v-bind="attrs" class="my-input" :prefix-icon="hashiqi" @input="onInput">
+  <el-input
+    ref="inputRef"
+    v-bind="props"
+    class="my-input"
+    :size="props.size === 'mini' ? 'small' : props.size"
+    :prefix-icon="hashiqi"
+    @input="onInput"
+  >
     <template v-for="(_, slot) in slots" :key="slot" v-slot:[slot]="scope">
       <slot :name="slot" v-bind="scope" />
     </template>
@@ -7,12 +14,12 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, useAttrs, useSlots } from 'vue'
+import { ref, useSlots } from 'vue'
 import { ElInput } from 'element-plus'
 import { debounce } from 'lodash-es'
+import { myInputEmits, myInputProps } from './props'
 import hashiqi from '@/packages/assets/svgs/hashiqi.svg?component'
 
-const attrs = useAttrs()
 const slots = useSlots()
 
 type Input = InstanceType<typeof ElInput>
@@ -33,7 +40,9 @@ const expose: Pick<Input, 'focus' | 'blur' | 'select' | 'clear'> = {
   },
 }
 
-const emits = defineEmits(['input'])
+const props = defineProps(myInputProps)
+
+const emit = defineEmits(myInputEmits)
 
 defineExpose(expose)
 
@@ -41,7 +50,7 @@ defineOptions({
   name: 'MyInput',
 })
 
-const onInput = debounce((value: string) => emits('input', value), 300)
+const onInput = debounce((value: string) => emit('input', Number.parseInt(value)), 300)
 </script>
 
 <style scoped lang="scss">

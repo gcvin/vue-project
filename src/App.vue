@@ -2,7 +2,7 @@
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 import { useDark, useToggle } from '@vueuse/core'
-import { ElSwitch, ElButton, ElTabs, ElTabPane } from 'element-plus'
+// import { ElSwitch, ElButton, ElTabs, ElTabPane } from 'element-plus'
 import { MyInput } from '@gcvin/my-component'
 import baimao from '@/assets/svgs/baimao.svg?component'
 import heimao from '@/assets/svgs/heimao.svg?component'
@@ -35,8 +35,10 @@ onMounted(() => {
       <MyInput
         ref="inputRef"
         v-model="name"
+        size="mini"
         placeholder="Enter your name"
-        @input="(val: string) => console.log(val)"
+        @input="(val: number) => console.log(val)"
+        @change="(val: string) => console.log(val)"
       >
         <template #prepend>
           <span>Prefix</span>
