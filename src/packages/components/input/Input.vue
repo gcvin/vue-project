@@ -26,18 +26,10 @@ type Input = InstanceType<typeof ElInput>
 
 const inputRef = ref<Input | null>(null)
 const expose: Pick<Input, 'focus' | 'blur' | 'select' | 'clear'> = {
-  focus: () => {
-    inputRef.value?.focus()
-  },
-  blur: () => {
-    inputRef.value?.blur()
-  },
-  select: () => {
-    inputRef.value?.select()
-  },
-  clear: () => {
-    inputRef.value?.clear()
-  },
+  focus: () => inputRef.value?.focus(),
+  blur: () => inputRef.value?.blur(),
+  select: () => inputRef.value?.select(),
+  clear: () => inputRef.value?.clear(),
 }
 
 const props = defineProps(myInputProps)
@@ -54,7 +46,17 @@ const onInput = debounce((value: string) => emit('input', Number.parseInt(value)
 </script>
 
 <style scoped lang="scss">
+@font-face {
+  font-family: 'mplus';
+  src: url('@/packages/assets/fonts/rounded-mplus-1mn-regular.ttf') format('truetype');
+}
+
 .my-input {
   --el-input-border-radius: 10px;
+  font-family: mplus;
+}
+
+.my-input :deep(.el-input__inner) {
+  font-family: inherit;
 }
 </style>

@@ -16,6 +16,7 @@ export default defineConfig({
     vueDevTools(),
     svgLoader({
       defaultImport: 'url',
+      svgo: false,
     }),
     importStyle({
       pkgName: '@gcvin/my-component',
