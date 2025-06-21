@@ -17,7 +17,19 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue'),
     },
+    {
+      path: '/:pathMatch(app-.*)',
+      name: 'subapp',
+      component: () => import('../views/SubApp.vue'),
+    },
   ],
+})
+
+router.beforeEach((to, from, next) => {
+  if (!history.state.current) {
+    history.replaceState({ current: to.path }, '')
+  }
+  next()
 })
 
 export default router

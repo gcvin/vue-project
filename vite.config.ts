@@ -6,8 +6,8 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 import svgLoader from 'vite-svg-loader'
 import importStyle from '@gcvin/my-component/es/plugin'
 // import ElementPlus from 'unplugin-element-plus/vite'
-// import Components from 'unplugin-vue-components/vite'
-// import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -24,14 +24,13 @@ export default defineConfig({
     // ElementPlus({
     //   useSource: true,
     // }),
-    // Components({
-    //   dirs: [],
-    //   resolvers: [
-    //     ElementPlusResolver({
-    //       importStyle: 'sass',
-    //     }),
-    //   ],
-    // }),
+    Components({
+      resolvers: [
+        ElementPlusResolver({
+          importStyle: false,
+        }),
+      ],
+    }),
   ],
   resolve: {
     alias: {

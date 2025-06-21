@@ -1,79 +1,95 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
 import { useDark, useToggle } from '@vueuse/core'
-// import { ElSwitch, ElButton, ElTabs, ElTabPane } from 'element-plus'
-import { MyInput } from '@gcvin/my-component'
+import { ElForm } from 'element-plus'
+import { MyInput, MyConfigProvider } from '@gcvin/my-component'
 import baimao from '@/assets/svgs/baimao.svg?component'
 import heimao from '@/assets/svgs/heimao.svg?component'
-import { onMounted, ref } from 'vue'
+import { nextTick, onMounted, ref } from 'vue'
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
-const name = ref('')
-const inputRef = ref<InstanceType<typeof MyInput> | null>(null)
+const tab = ref(0)
+const form = ref([
+  {
+    input: [
+      {
+        name: '',
+      },
+    ],
+  },
+])
+const inputRef = ref<InstanceType<typeof MyInput>[] | null>(null)
+const formRef = ref<InstanceType<typeof ElForm> | null>(null)
+
+const onBeforeLeave = async () => {
+  return await formRef.value?.validate()
+}
+
+const onTabChange = async () => {
+  await nextTick()
+  await nextTick()
+  formRef.value?.clearValidate()
+}
 
 onMounted(() => {
-  inputRef.value?.focus()
+  // inputRef.value?.[0].focus()
 })
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/svgs/logo.svg" width="125" height="125" />
-
+  <MyConfigProvider my-size="mini">
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-      <ElSwitch v-model="isDark" @change="(val) => toggleDark(Boolean(val))" />
-
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/app-vue2">App Vue2</RouterLink>
+        <RouterLink to="/app-vue3/">App Vue3</RouterLink>
+        <RouterLink to="/app-vite3/">App Vite3</RouterLink>
       </nav>
-
-      <ElButton type="primary" :icon="baimao" size="large">Get Started</ElButton>
-      <MyInput
-        ref="inputRef"
-        v-model="name"
-        size="mini"
-        placeholder="Enter your name"
-        @input="(val: number) => console.log(val)"
-        @change="(val: string) => console.log(val)"
-      >
-        <template #prepend>
-          <span>Prefix</span>
-        </template>
-        <template #append>
-          <span>Suffix</span>
-        </template>
-      </MyInput>
-
+      <ElSwitch v-model="isDark" @change="(val) => toggleDark(Boolean(val))" />
+      <ElButton type="primary" :icon="baimao">Get Started</ElButton>
       <div class="tabs-wrapper">
         <baimao />
         <heimao />
-        <ElTabs>
-          <ElTabPane v-for="n in 12" :key="n" :label="`Tab ${n}`" :name="`tab${n}`">
+        <ElTabs v-model="tab" :before-leave="onBeforeLeave" @tab-change="onTabChange">
+          <ElTabPane v-for="n in 12" :key="n" :label="`Tab ${n}`" :name="n - 1">
             <div>Content of Tab {{ n }}</div>
           </ElTabPane>
         </ElTabs>
+        <ElForm ref="formRef" :model="form[tab] || {}">
+          <ElFormItem
+            v-for="(item, index) in form[tab]?.input"
+            :key="index"
+            :prop="`input.${index}.name`"
+            required
+          >
+            <MyInput
+              ref="inputRef"
+              v-model="item.name"
+              placeholder="Enter your name"
+              @input="(val: number) => console.log(val)"
+              @change="(val: string) => console.log(val)"
+            >
+              <template #prepend>
+                <span>Prefix</span>
+              </template>
+              <template #append>
+                <span>Suffix</span>
+              </template>
+            </MyInput>
+          </ElFormItem>
+        </ElForm>
       </div>
     </div>
-  </header>
 
-  <RouterView />
+    <RouterView />
+    <div id="app-vue2"></div>
+    <div id="app-vue3"></div>
+    <div id="app-vite3"></div>
+  </MyConfigProvider>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
 nav {
   width: 100%;
   font-size: 12px;
@@ -133,33 +149,6 @@ nav a:first-of-type {
 
   svg:nth-of-type(2) {
     right: 0;
-  }
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
   }
 }
 </style>

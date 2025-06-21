@@ -2,8 +2,8 @@
   <el-input
     ref="inputRef"
     v-bind="props"
-    class="my-input"
-    :size="props.size === 'mini' ? 'small' : props.size"
+    :class="cls"
+    :size="size === 'mini' ? 'small' : size"
     :prefix-icon="hashiqi"
     @input="onInput"
   >
@@ -14,13 +14,17 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, useSlots } from 'vue'
-import { ElInput } from 'element-plus'
+import { computed, ref, useSlots, type Ref } from 'vue'
+import { ElInput, useGlobalConfig } from 'element-plus'
 import { debounce } from 'lodash-es'
 import { myInputEmits, myInputProps } from './props'
-import hashiqi from '@/packages/assets/svgs/hashiqi.svg?component'
+import hashiqi from '@/packages/my-component/assets/svgs/hashiqi.svg?component'
+import type { MyConfigProviderProps } from '../config-provider/props'
 
 const slots = useSlots()
+const config: Ref<MyConfigProviderProps> = useGlobalConfig()
+const cls = `${config.value.namespace?.replace(/el$/, 'my') || 'my'}-input`
+const size = computed(() => props.size || config.value.mySize)
 
 type Input = InstanceType<typeof ElInput>
 
@@ -48,7 +52,7 @@ const onInput = debounce((value: string) => emit('input', Number.parseInt(value)
 <style scoped lang="scss">
 @font-face {
   font-family: 'mplus';
-  src: url('@/packages/assets/fonts/rounded-mplus-1mn-regular.ttf') format('truetype');
+  src: url('@/packages/my-component/assets/fonts/rounded-mplus-1mn-regular.ttf') format('truetype');
 }
 
 .my-input {

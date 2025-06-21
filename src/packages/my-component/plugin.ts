@@ -1,3 +1,4 @@
+import { kebabCase } from 'lodash-es'
 import type { Plugin } from 'vite'
 
 interface ImportStylePluginOptions {
@@ -16,9 +17,9 @@ export default ({ pkgName }: ImportStylePluginOptions): Plugin => {
             .split(',')
             .map((item: string) => {
               item = item.trim()
-              const name = item.slice(2).charAt(0).toLowerCase() + item.slice(3)
-              return `import ${item} from '${pkgName}/es/components/${name.trim()}/index';
-                      import '${pkgName}/es/components/${name.trim()}/${item.slice(2)}.css'`
+              const name = kebabCase(item.slice(2).trim())
+              return `import ${item} from '${pkgName}/es/components/${name}/index';
+                      import '${pkgName}/es/components/${name}/${item.slice(2)}.css'`
             })
             .join(';')
         })
