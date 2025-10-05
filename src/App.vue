@@ -32,7 +32,7 @@ const onTabChange = async () => {
 }
 
 onMounted(() => {
-  // inputRef.value?.[0].focus()
+  console.log(inputRef.value?.[0].isComposing)
 })
 </script>
 

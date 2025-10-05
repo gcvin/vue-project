@@ -11,6 +11,14 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
 // https://vite.dev/config/
 export default defineConfig({
+  build: {
+    rollupOptions: {
+      input: [
+        fileURLToPath(new URL('./src/assets/element.scss', import.meta.url)),
+        fileURLToPath(new URL('./index.html', import.meta.url)),
+      ],
+    },
+  },
   plugins: [
     vue(),
     vueDevTools(),

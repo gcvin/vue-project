@@ -29,12 +29,18 @@ const size = computed(() => props.size || config.value.mySize)
 type Input = InstanceType<typeof ElInput>
 
 const inputRef = ref<Input | null>(null)
-const expose: Pick<Input, 'focus' | 'blur' | 'select' | 'clear'> = {
-  focus: () => inputRef.value?.focus(),
-  blur: () => inputRef.value?.blur(),
-  select: () => inputRef.value?.select(),
-  clear: () => inputRef.value?.clear(),
-}
+const funcKeys = ['focus', 'blur', 'select', 'clear', 'resizeTextarea'] as const
+const propKeys = ['input', 'ref', 'textarea', 'textareaStyle', 'isComposing'] as const
+const expose = funcKeys.reduce(
+  (acc, key) => Object.assign(acc, { [key]: (...args: []) => inputRef.value?.[key](...args) }),
+  {} as Pick<Input, (typeof funcKeys)[number] | (typeof propKeys)[number]>,
+)
+propKeys.forEach((key) =>
+  Object.defineProperty(expose, key, {
+    get: () => inputRef.value?.[key],
+    set: (val) => inputRef.value && (inputRef.value[key] = val),
+  }),
+)
 
 const props = defineProps(myInputProps)
 
