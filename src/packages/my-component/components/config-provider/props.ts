@@ -2,7 +2,8 @@ import { configProviderProps } from 'element-plus'
 import { buildProps } from 'element-plus/es/utils/index'
 import type { ExtractPropTypes } from 'vue'
 
-const customConfigProviderProps = buildProps({
+export const myConfigProviderProps = buildProps({
+  ...configProviderProps,
   mySize: {
     type: String,
     values: ['', 'default', 'small', 'large', 'mini'],
@@ -17,10 +18,5 @@ const customConfigProviderProps = buildProps({
     type: Boolean,
   },
 } as const)
-
-export const myConfigProviderProps = {
-  ...configProviderProps,
-  ...customConfigProviderProps,
-}
 
 export type MyConfigProviderProps = ExtractPropTypes<typeof myConfigProviderProps>

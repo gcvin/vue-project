@@ -5,6 +5,7 @@ import { MyInput, MyConfigProvider } from '@gcvin/my-component'
 import baimao from '@/assets/svgs/baimao.svg?component'
 import heimao from '@/assets/svgs/heimao.svg?component'
 import { nextTick, onMounted, ref } from 'vue'
+import '@gcvin/my-component/es/web-comp'
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
@@ -32,7 +33,7 @@ const onTabChange = async () => {
 }
 
 onMounted(() => {
-  console.log(inputRef.value?.[0].isComposing)
+  // console.log(inputRef.value?.[0].isComposing)
 })
 </script>
 
@@ -46,7 +47,13 @@ onMounted(() => {
         <RouterLink to="/app-vue3/">App Vue3</RouterLink>
         <RouterLink to="/app-vite3/">App Vite3</RouterLink>
       </nav>
-      <ElSwitch v-model="isDark" @change="(val) => toggleDark(Boolean(val))" />
+      <my-switch :model-value="isDark" @change="(e: CustomEvent) => toggleDark(e.detail.checked)">
+        <!-- eslint-disable-next-line vue/no-deprecated-slot-attribute -->
+        <span slot="left">关</span>
+        <!-- eslint-disable-next-line vue/no-deprecated-slot-attribute -->
+        <span slot="right">开</span>
+      </my-switch>
+      <!-- <ElSwitch v-model="isDark" @change="(val) => toggleDark(Boolean(val))" /> -->
       <ElButton type="primary" :icon="baimao">Get Started</ElButton>
       <div class="tabs-wrapper">
         <baimao />

@@ -20,7 +20,13 @@ export default defineConfig({
     },
   },
   plugins: [
-    vue(),
+    vue({
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => tag.startsWith('my-'),
+        },
+      },
+    }),
     vueDevTools(),
     svgLoader({
       defaultImport: 'url',

@@ -50,7 +50,11 @@ export default defineConfig({
       ],
     },
     lib: {
-      entry: [resolve(__dirname, './index.ts'), resolve(__dirname, './plugin.ts')],
+      entry: [
+        resolve(__dirname, './index.ts'),
+        resolve(__dirname, './web-comp.ts'),
+        resolve(__dirname, './plugin.ts'),
+      ],
     },
   },
   plugins: [
