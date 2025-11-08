@@ -6,14 +6,15 @@
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
-    "build:component": "vite build --config src/packages/my-component/vite.config.ts",
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
     "lint:oxlint": "oxlint . --fix -D correctness --ignore-path .gitignore",
     "lint:eslint": "eslint . --fix",
     "lint": "run-s lint:*",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "build:component": "pnpm --filter my-component build",
+    "test:component": "pnpm --filter my-component test"
   },
   "dependencies": {
     "@gcvin/my-component": "workspace:*",

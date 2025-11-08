@@ -1,6 +1,6 @@
 import { fileURLToPath, URL } from 'node:url'
 
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vitest/config'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 import dts from 'vite-plugin-dts'
@@ -72,4 +72,8 @@ export default defineConfig({
       outDir: resolve(__dirname, './es'),
     }),
   ],
+  test: {
+    environment: 'happy-dom',
+    globals: true,
+  },
 })

@@ -23,8 +23,8 @@ import type { MyConfigProviderProps } from '../config-provider/props'
 
 const slots = useSlots()
 const config: Ref<MyConfigProviderProps> = useGlobalConfig()
-const cls = `${config.value.namespace?.replace(/el$/, 'my') || 'my'}-input`
-const size = computed(() => props.size || config.value.mySize)
+const cls = `${config.value?.namespace?.replace(/el$/, 'my') || 'my'}-input`
+const size = computed(() => props.size || config.value?.mySize)
 
 type Input = InstanceType<typeof ElInput>
 
