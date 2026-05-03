@@ -13,8 +13,8 @@
     "lint:eslint": "eslint . --fix",
     "lint": "run-s lint:*",
     "format": "prettier --write src/",
-    "build:component": "pnpm --filter my-component build",
-    "test:component": "pnpm --filter my-component test"
+    "mc:build": "pnpm --filter my-component build",
+    "mc:test": "pnpm --filter my-component test"
   },
   "dependencies": {
     "@gcvin/my-component": "workspace:*",

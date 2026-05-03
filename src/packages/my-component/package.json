@@ -2,6 +2,7 @@
   "name": "@gcvin/my-component",
   "version": "1.0.2",
   "description": "A Vue 3 component library",
+  "type": "module",
   "main": "lib/index.js",
   "module": "es/index.mjs",
   "types": "es/index.d.ts",
@@ -66,6 +67,8 @@
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.3",
+    "@vitejs/plugin-vue-jsx": "^5.1.1",
     "@vue/test-utils": "^2.4.6",
     "happy-dom": "^20.0.10",
     "vitest": "^4.0.8"

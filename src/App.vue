@@ -4,7 +4,7 @@ import { ElForm } from 'element-plus'
 import { MyInput, MyConfigProvider } from '@gcvin/my-component'
 import baimao from '@/assets/svgs/baimao.svg?component'
 import heimao from '@/assets/svgs/heimao.svg?component'
-import { nextTick, onMounted, ref } from 'vue'
+import { nextTick, onMounted, ref, useTemplateRef } from 'vue'
 import '@gcvin/my-component/es/web-comp'
 
 const isDark = useDark()
@@ -19,8 +19,8 @@ const form = ref([
     ],
   },
 ])
-const inputRef = ref<InstanceType<typeof MyInput>[] | null>(null)
-const formRef = ref<InstanceType<typeof ElForm> | null>(null)
+const inputRef = useTemplateRef('inputRef')
+const formRef = useTemplateRef('formRef')
 
 const onBeforeLeave = async () => {
   return await formRef.value?.validate()

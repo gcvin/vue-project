@@ -2,6 +2,7 @@ import { fileURLToPath, URL } from 'node:url'
 
 import { defineConfig } from 'vitest/config'
 import vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx'
 import { resolve } from 'path'
 import dts from 'vite-plugin-dts'
 import svgLoader from 'vite-svg-loader'
@@ -19,7 +20,6 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: resolve(__dirname, './'),
     cssCodeSplit: true,
     sourcemap: true,
     rollupOptions: {
@@ -59,6 +59,7 @@ export default defineConfig({
   },
   plugins: [
     vue(),
+    vueJsx(),
     svgLoader({
       defaultImport: 'url',
       svgo: false,

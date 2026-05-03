@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, useSlots, type Ref } from 'vue'
+import { computed, useSlots, useTemplateRef, type Ref } from 'vue'
 import { ElInput, useGlobalConfig } from 'element-plus'
 import { debounce } from 'lodash-es'
 import { myInputEmits, myInputProps } from './props'
@@ -28,7 +28,7 @@ const size = computed(() => props.size || config.value?.mySize)
 
 type Input = InstanceType<typeof ElInput>
 
-const inputRef = ref<Input | null>(null)
+const inputRef = useTemplateRef('inputRef')
 const funcKeys = ['focus', 'blur', 'select', 'clear', 'resizeTextarea'] as const
 const propKeys = ['input', 'ref', 'textarea', 'textareaStyle', 'isComposing'] as const
 const expose = funcKeys.reduce(
