@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, useSlots, useTemplateRef, type Ref } from 'vue'
+import { computed, useSlots, ref, type Ref } from 'vue'
 import { ElInput, useGlobalConfig } from 'element-plus'
 import { debounce } from 'lodash-es'
 import { myInputEmits, myInputProps } from './props'
@@ -28,14 +28,23 @@ const size = computed(() => props.size || config.value?.mySize)
 
 type Input = InstanceType<typeof ElInput>
 
-const inputRef = useTemplateRef('inputRef')
-const funcKeys = ['focus', 'blur', 'select', 'clear', 'resizeTextarea'] as const
-const propKeys = ['input', 'ref', 'textarea', 'textareaStyle', 'isComposing'] as const
-const expose = funcKeys.reduce(
-  (acc, key) => Object.assign(acc, { [key]: (...args: []) => inputRef.value?.[key](...args) }),
-  {} as Pick<Input, (typeof funcKeys)[number] | (typeof propKeys)[number]>,
-)
-propKeys.forEach((key) =>
+const inputRef = ref<Input | null>(null)
+const exposeKeys = [
+  'focus',
+  'blur',
+  'select',
+  'clear',
+  'resizeTextarea',
+  'input',
+  'ref',
+  'textarea',
+  'textareaStyle',
+  'isComposing',
+] as const
+const expose = {} as {
+  [K in (typeof exposeKeys)[number]]: Input[K]
+}
+exposeKeys.forEach((key) =>
   Object.defineProperty(expose, key, {
     get: () => inputRef.value?.[key],
     set: (val) => inputRef.value && (inputRef.value[key] = val),
