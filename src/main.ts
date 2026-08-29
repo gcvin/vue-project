@@ -46,11 +46,21 @@ start({
   fetch: async (url) => {
     if (typeof url === 'string' && url.endsWith('.css')) {
       return fetch(url).then((response) => {
-        const responseClone = { ...response }
-        if (response.ok) {
-          const origin = new URL(url, window.location.href).origin
-          responseClone.text = () =>
-            response
+        if (!response.ok) {
+          return response
+        }
+        const origin = new URL(url, window.location.href).origin
+        let textPromise: Promise<string> | null = null
+        return {
+          ok: response.ok,
+          status: response.status,
+          statusText: response.statusText,
+          headers: response.headers,
+          url: response.url,
+          redirected: response.redirected,
+          type: response.type,
+          text: () => {
+            textPromise ??= response
               .text()
               .then((text) =>
                 text.replace(
@@ -58,8 +68,9 @@ start({
                   (_, quote, path) => `url(${quote}${origin}${path}${quote})`,
                 ),
               )
-        }
-        return responseClone
+            return textPromise
+          },
+        } as unknown as Response
       })
     }
     return fetch(url)

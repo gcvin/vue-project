@@ -8,15 +8,6 @@ export const myConfigProviderProps = buildProps({
     type: String,
     values: ['', 'default', 'small', 'large', 'mini'],
   },
-  a11y: {
-    type: Boolean,
-  },
-  namespace: {
-    type: String,
-  },
-  keyboardNavigation: {
-    type: Boolean,
-  },
 } as const)
 
 export type MyConfigProviderProps = ExtractPropTypes<typeof myConfigProviderProps>

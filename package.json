@@ -13,6 +13,7 @@
     "lint:eslint": "eslint . --fix",
     "lint": "run-s lint:*",
     "format": "prettier --write src/",
+    "prepare": "pnpm mc:build",
     "mc:build": "pnpm --filter my-component build",
     "mc:test": "pnpm --filter my-component test"
   },

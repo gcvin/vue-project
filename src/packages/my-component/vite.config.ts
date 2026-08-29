@@ -12,8 +12,17 @@ const external = [...Object.keys(peerDependencies || {}), ...Object.keys(depende
   (dep) => new RegExp(`^${dep}`),
 )
 
+const assetFileNames = (assetInfo: { names?: string[] }) => {
+  const name = assetInfo.names?.[0] ?? ''
+  // 组件样式保持放在对应组件目录，例如 es/components/input/Input.css
+  if (name.endsWith('.css')) return name
+  // 字体等其它静态资源统一放到 assets/fonts/
+  return 'assets/fonts/[name][extname]'
+}
+
 export default defineConfig({
   publicDir: false,
+  base: './',
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('../../', import.meta.url)),
@@ -22,6 +31,7 @@ export default defineConfig({
   build: {
     cssCodeSplit: true,
     sourcemap: true,
+    assetsInlineLimit: 0,
     rollupOptions: {
       external,
       output: [
@@ -29,6 +39,7 @@ export default defineConfig({
           format: 'es',
           entryFileNames: '[name].js',
           exports: 'named',
+          assetFileNames,
           dir: resolve(__dirname, './dist'),
         },
         {
@@ -37,6 +48,7 @@ export default defineConfig({
           exports: 'named',
           preserveModules: true,
           preserveModulesRoot: 'packages',
+          assetFileNames,
           dir: resolve(__dirname, './es'),
         },
         {
@@ -45,6 +57,7 @@ export default defineConfig({
           exports: 'named',
           preserveModules: true,
           preserveModulesRoot: 'packages',
+          assetFileNames,
           dir: resolve(__dirname, './lib'),
         },
       ],

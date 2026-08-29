@@ -25,11 +25,10 @@ const router = createRouter({
   ],
 })
 
-router.beforeEach((to, from, next) => {
-  if (!history.state.current) {
-    history.replaceState({ current: to.path }, '')
+router.beforeEach((to) => {
+  if (!history.state?.current) {
+    history.replaceState({ ...history.state, current: to.path }, '')
   }
-  next()
 })
 
 export default router

@@ -10,7 +10,7 @@ export class MySwitch extends MyComponent {
     }
   }
 
-  handleClick() {
+  handleClick = () => {
     this.state.checked = !this.state.checked
     const changeEvent = new CustomEvent('change', {
       detail: { checked: this.state.checked },
@@ -55,7 +55,7 @@ export class MySwitch extends MyComponent {
         <span class="left">
           <slot name="left"></slot>
         </span>
-        <div class="switch-core${this.state.checked ? ' checked' : ''}" @click=${this.handleClick.bind(this)}>
+        <div class="switch-core${this.state.checked ? ' checked' : ''}" @click=${this.handleClick}>
           <div class="switch-action"></div>
         </div>
         <span class="right">

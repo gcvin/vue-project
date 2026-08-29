@@ -17,6 +17,13 @@ export default defineConfig({
         fileURLToPath(new URL('./src/assets/element.scss', import.meta.url)),
         fileURLToPath(new URL('./index.html', import.meta.url)),
       ],
+      output: {
+        manualChunks: {
+          'vendor-element-plus': ['element-plus'],
+          'vendor-fabric': ['fabric'],
+          'vendor-qiankun': ['qiankun'],
+        },
+      },
     },
   },
   plugins: [

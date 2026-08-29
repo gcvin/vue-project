@@ -7,7 +7,7 @@
         <div>Content of Tab {{ n }}</div>
       </ElTabPane>
     </ElTabs>
-    <ElForm ref="formRef" :model="form[tab] || {}">
+    <ElForm ref="formRef" :model="form[tab]">
       <ElFormItem
         v-for="(item, index) in form[tab]?.input"
         :key="index"
@@ -41,7 +41,7 @@ import baimao from '@/assets/svgs/baimao.svg?component'
 import heimao from '@/assets/svgs/heimao.svg?component'
 
 const tab = ref(0)
-const form = ref([{ input: [{ name: '' }, { name: '' }] }])
+const form = ref(Array.from({ length: 12 }, () => ({ input: [{ name: '' }, { name: '' }] })))
 const inputRef = ref<InstanceType<typeof MyInput>[]>([])
 const formRef = ref<InstanceType<typeof ElForm> | null>(null)
 

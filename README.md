@@ -1,6 +1,6 @@
 # vue-project
 
-This template should help get you started developing with Vue 3 in Vite.
+Vue 3 + Vite + Element Plus 主应用，内置 `@gcvin/my-component` 组件库（workspace 子包）与 qiankun 微前端示例。
 
 ## Recommended IDE Setup
 
@@ -20,6 +20,15 @@ See [Vite Configuration Reference](https://vite.dev/config/).
 pnpm install
 ```
 
+`pnpm install` 会自动通过 `prepare` 脚本构建组件库（输出到子包的 `es`/`lib`/`dist`）。
+若跳过构建，可手动执行：
+
+```sh
+pnpm mc:build
+```
+
+注意：组件库的构建产物已加入 `.gitignore`，开发前需确保其存在（`pnpm install` 或 `pnpm mc:build`）。
+
 ### Compile and Hot-Reload for Development
 
 ```sh
@@ -36,4 +45,10 @@ pnpm build
 
 ```sh
 pnpm lint
+```
+
+### 组件库测试
+
+```sh
+pnpm mc:test
 ```

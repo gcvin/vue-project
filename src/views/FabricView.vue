@@ -4,10 +4,12 @@
 
 <script setup lang="ts">
 import * as fabric from 'fabric'
-import { onMounted } from 'vue'
+import { onMounted, onUnmounted } from 'vue'
+
+let canvas: fabric.Canvas | null = null
 
 onMounted(() => {
-  const canvas = new fabric.Canvas('fabric-canvas', {
+  canvas = new fabric.Canvas('fabric-canvas', {
     selection: false,
   })
 
@@ -29,22 +31,27 @@ onMounted(() => {
     left: 250,
     top: 150,
     fontSize: 20,
-    fontFamily: 'rounded m+ 1mn',
+    fontFamily: 'mplus',
     fill: '#000',
   })
   let isTextAdded = false
   rect.on('mousemove', () => {
     if (!isTextAdded) {
-      canvas.add(text)
+      canvas?.add(text)
       isTextAdded = true
     }
   })
   rect.on('mouseout', () => {
     if (isTextAdded) {
-      canvas.remove(text)
+      canvas?.remove(text)
       isTextAdded = false
     }
   })
+})
+
+onUnmounted(() => {
+  canvas?.dispose()
+  canvas = null
 })
 </script>
 

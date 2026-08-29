@@ -6,7 +6,7 @@ interface ImportStylePluginOptions {
 }
 
 export default ({ pkgName }: ImportStylePluginOptions): Plugin => {
-  const regStr = `(?<!\\/\\/.*|\\/\\*[\s\S]*?\\*\\/\\s*)import\\s*{\\s*([^{}]+)\\s*}\\s*from\\s*['"]${pkgName}['"]`
+  const regStr = `(?<!\\/\\/.*|\\/\\*[\\s\\S]*?\\*\\/\\s*)import\\s*{\\s*([^{}]+)\\s*}\\s*from\\s*['"]${pkgName}['"]`
   return {
     name: 'vite-plugin-import-style',
     enforce: 'pre',
@@ -17,9 +17,13 @@ export default ({ pkgName }: ImportStylePluginOptions): Plugin => {
             .split(',')
             .map((item: string) => {
               item = item.trim()
-              const name = kebabCase(item.slice(2).trim())
+              const componentName = item
+                .slice(2)
+                .trim()
+                .split(/\s+as\s+/)[0]
+              const name = kebabCase(componentName)
               return `import ${item} from '${pkgName}/es/components/${name}/index';
-                      import '${pkgName}/es/components/${name}/${item.slice(2)}.css'`
+                      import '${pkgName}/es/components/${name}/${componentName}.css'`
             })
             .join(';')
         })
