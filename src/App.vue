@@ -18,7 +18,6 @@ const toggleDark = useToggle(isDark)
         <RouterLink to="/about">About</RouterLink>
         <RouterLink to="/app-vue2">App Vue2</RouterLink>
         <RouterLink to="/app-vue3/">App Vue3</RouterLink>
-        <RouterLink to="/app-vite3/">App Vite3</RouterLink>
       </nav>
       <my-switch :model-value="isDark" @change="(e: CustomEvent) => toggleDark(e.detail.checked)">
         <!-- eslint-disable-next-line vue/no-deprecated-slot-attribute -->
@@ -31,10 +30,13 @@ const toggleDark = useToggle(isDark)
       <FabricView />
     </div>
 
-    <RouterView />
+    <RouterView v-slot="{ Component }">
+      <KeepAlive>
+        <component :is="Component" />
+      </KeepAlive>
+    </RouterView>
     <div id="app-vue2"></div>
     <div id="app-vue3"></div>
-    <div id="app-vite3"></div>
   </MyConfigProvider>
 </template>
 
