@@ -5,7 +5,7 @@ interface ImportStylePluginOptions {
   pkgName: string
 }
 
-export default ({ pkgName }: ImportStylePluginOptions): Plugin => {
+export const importStyle = ({ pkgName }: ImportStylePluginOptions): Plugin => {
   const regStr = `(?<!\\/\\/.*|\\/\\*[\\s\\S]*?\\*\\/\\s*)import\\s*{\\s*([^{}]+)\\s*}\\s*from\\s*['"]${pkgName}['"]`
   return {
     name: 'vite-plugin-import-style',

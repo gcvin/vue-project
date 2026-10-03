@@ -14,27 +14,12 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, onUnmounted, useSlots, ref, type Ref } from 'vue'
+import { computed, useSlots, ref, type Ref } from 'vue'
 import { ElInput, useGlobalConfig, type ConfigProviderProps } from 'element-plus'
 import { debounce, omit } from 'lodash-es'
 import { myInputEmits, myInputProps } from './props'
 import hashiqi from '@/packages/my-component/assets/svgs/hashiqi.svg?component'
-import mplusFont from '@/packages/my-component/assets/fonts/rounded-mplus-1mn-regular.ttf?url&no-inline'
 import type { MyConfigProviderProps } from '../config-provider/props'
-
-let fontStyleEl: HTMLStyleElement | null = null
-onMounted(() => {
-  if (mplusFont && !document.querySelector('style[data-mplus-font]')) {
-    fontStyleEl = document.createElement('style')
-    fontStyleEl.dataset.mplusFont = ''
-    fontStyleEl.textContent = `@font-face{font-family:'mplus';src:url("${mplusFont}") format("truetype")}`
-    document.head.appendChild(fontStyleEl)
-  }
-})
-onUnmounted(() => {
-  fontStyleEl?.remove()
-  fontStyleEl = null
-})
 
 const slots = useSlots()
 type MyGlobalConfig = Partial<ConfigProviderProps> & { mySize?: MyConfigProviderProps['mySize'] }
@@ -85,6 +70,11 @@ const onInput = debounce((value: string) => emit('input', Number.parseInt(value)
 </script>
 
 <style scoped lang="scss">
+@font-face {
+  font-family: mplus;
+  src: url('@/packages/my-component/assets/fonts/rounded-mplus-1mn-regular.ttf?url&no-inline')
+    format('truetype');
+}
 .my-input {
   --el-input-border-radius: 10px;
   font-family: mplus;

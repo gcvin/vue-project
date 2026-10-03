@@ -1,6 +1,2 @@
+/// <reference types="vite/client" />
 /// <reference types="vite-svg-loader" />
-
-declare module '*?url&no-inline' {
-  const src: string
-  export default src
-}

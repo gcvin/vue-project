@@ -7,6 +7,7 @@ import { resolve } from 'path'
 import dts from 'vite-plugin-dts'
 import svgLoader from 'vite-svg-loader'
 import { peerDependencies, dependencies } from './package.json'
+import { svgLoaderHelper } from './plugins'
 
 const external = [...Object.keys(peerDependencies || {}), ...Object.keys(dependencies || {})].map(
   (dep) => new RegExp(`^${dep}`),
@@ -14,10 +15,8 @@ const external = [...Object.keys(peerDependencies || {}), ...Object.keys(depende
 
 const assetFileNames = (assetInfo: { names?: string[] }) => {
   const name = assetInfo.names?.[0] ?? ''
-  // 组件样式保持放在对应组件目录，例如 es/components/input/Input.css
-  if (name.endsWith('.css')) return name
-  // 字体等其它静态资源统一放到 assets/fonts/
-  return 'assets/fonts/[name][extname]'
+  if (name.endsWith('.ttf')) return 'assets/fonts/[name][extname]'
+  return name
 }
 
 export default defineConfig({
@@ -66,7 +65,7 @@ export default defineConfig({
       entry: [
         resolve(__dirname, './index.ts'),
         resolve(__dirname, './web-comp.ts'),
-        resolve(__dirname, './plugin.ts'),
+        resolve(__dirname, './plugins/index.ts'),
       ],
     },
   },
@@ -77,6 +76,7 @@ export default defineConfig({
       defaultImport: 'url',
       svgo: false,
     }),
+    svgLoaderHelper(),
     dts({
       tsconfigPath: resolve(__dirname, './tsconfig.declaration.json'),
       outDir: resolve(__dirname, './lib'),
